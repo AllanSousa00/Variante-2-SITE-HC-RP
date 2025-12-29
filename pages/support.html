@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suporte - Hydra City</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .support-section {
+            padding: 80px 0;
+            background: var(--dark-bg);
+            min-height: calc(100vh - 200px);
+        }
+        
+        .support-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .support-card {
+            background: rgba(26, 26, 46, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .support-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .support-form {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group select option {
+            background: #1a1a2e;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+        }
+        
+        .form-group select:invalid {
+            color: #999;
+        }
+        
+        .form-group select:valid {
+            color: var(--text-color);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            background: rgba(255, 68, 68, 0.1);
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #ff4444;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-color: #ff4444 !important;
+            box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+        }
+        
+        .success-message {
+            display: none;
+            background: rgba(46, 213, 115, 0.1);
+            color: #2ed573;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i> Sobre
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="shop.html" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Loja
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="updates.html" class="nav-link">
+                            <i class="fas fa-newspaper"></i> Atualizações
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="support.html" class="nav-link active">
+                            <i class="fas fa-headset"></i> Suporte
+                        </a>
+                    </li>
+                    <li class="nav-item" id="profileNav" style="display: none;">
+                        <a href="profile.html" class="nav-link">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <a href="login.html" class="nav-link login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item" id="logoutNav" style="display: none;">
+                        <a href="#" class="nav-link logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Support Section -->
+    <section class="support-section">
+        <div class="support-container">
+            <div class="support-card">
+                <h2 class="support-title">Central de Suporte</h2>
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Sua mensagem foi enviada com sucesso! Nossa equipe entrará em contato em breve.
+                </div>
+                <form id="supportForm" class="support-form">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" required>
+                        <div class="error-message" id="nameError">Por favor, insira seu nome</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message" id="emailError">Por favor, insira um e-mail válido</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Categoria</label>
+                        <select id="category" name="category" required>
+                            <option value="" disabled selected>Selecione uma categoria</option>
+                            <option value="technical">Problema Técnico</option>
+                            <option value="account">Problema com Conta</option>
+                            <option value="payment">Problema com Pagamento</option>
+                            <option value="bug">Reportar Bug</option>
+                            <option value="other">Outro Assunto</option>
+                        </select>
+                        <div class="error-message" id="categoryError">Por favor, selecione uma categoria</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Assunto</label>
+                        <input type="text" id="subject" name="subject" required>
+                        <div class="error-message" id="subjectError">Por favor, insira um assunto</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensagem</label>
+                        <textarea id="message" name="message" required></textarea>
+                        <div class="error-message" id="messageError">Por favor, insira sua mensagem</div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">Enviar Mensagem</span>
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-city"></i> Hydra City</h3>
+                    <p>O melhor servidor de GTA RP SAMP do Brasil. Junte-se à nossa comunidade e viva experiências únicas!</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html">Início</a></li>
+                        <li><a href="about.html">Sobre</a></li>
+                        <li><a href="shop.html">Loja</a></li>
+                        <li><a href="updates.html">Atualizações</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="support.html">Central de Ajuda</a></li>
+                        <li><a href="support.html">Reportar Bug</a></li>
+                        <li><a href="support.html">Contato</a></li>
+                        <li><a href="#">Regras</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Servidor</h4>
+                    <p><strong>IP:</strong> hydra.city:7777</p>
+                    <p><strong>Versão:</strong> SA-MP 0.3.7</p>
+                    <p><strong>Players Online:</strong> <span id="footerPlayersCount">247</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hydra City. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/support.js"></script>
+</body>
+</html>

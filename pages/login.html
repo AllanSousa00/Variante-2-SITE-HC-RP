@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hydra City RP</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            padding: 2rem 0;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: var(--shadow-primary);
+            width: 100%;
+            max-width: 450px;
+            margin: 0 20px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-tabs {
+            display: flex;
+            background: var(--darker-bg);
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-radius: calc(var(--border-radius) - 4px);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--darker-bg);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+        }
+
+        .form-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary-color);
+        }
+
+        .login-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .social-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            color: var(--text-primary);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-color);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+        }
+
+        .demo-accounts {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .demo-accounts h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .demo-accounts p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin: 0.2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 2rem;
+                margin: 0 10px;
+            }
+
+            .login-header h1 {
+                font-size: 2rem;
+            }
+
+            .back-home {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                <p>Entre na sua conta ou crie uma nova</p>
+            </div>
+
+            <div class="form-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+                <button class="tab-btn" onclick="switchTab('register')">
+                    <i class="fas fa-user-plus"></i> Registrar
+                </button>
+            </div>
+
+            <!-- Login Tab -->
+            <div id="loginTab" class="tab-content active">
+                <form class="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <i class="fas fa-user form-icon"></i>
+                        <input type="text" class="form-input" id="loginUsername" placeholder="Nome de usuário ou email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-lock form-icon"></i>
+                        <input type="password" class="form-input" id="loginPassword" placeholder="Senha" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            Lembrar-me
+                        </label>
+                        <a href="#" class="forgot-password">Esqueci a senha</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Entrar
+                    </button>
+                </form>
+
+                <div class="demo-accounts">
+                    <h4><i class="fas fa-info-circle"></i> Contas de Demonstração</h4>
+                    <p><strong>Admin:</strong> admin / admin123</p>
+                    <p><strong>Player:</strong> player1 / 123456</p>
+                </div>
+            </div>
+
+            <!-- Register Tab -->
+            <div id="registerTab" class="tab-content">
+                <form class="login-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <i class="fas fa-user form-icon"></i>
+                        <input type="text" class="form-input" id="registerUsername" placeholder="Nome de usuário" required>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-envelope form-icon"></i>
+                        <input type="email" class="form-input" id="registerEmail" placeholder="Email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-lock form-icon"></i>
+                        <input type="password" class="form-input" id="registerPassword" placeholder="Senha" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-lock form-icon"></i>
+                        <input type="password" class="form-input" id="confirmPassword" placeholder="Confirmar senha" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="agreeTerms" required>
+                            Aceito os termos de uso
+                        </label>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-user-plus"></i>
+                        Criar Conta
+                    </button>
+                </form>
+            </div>
+
+            <div class="social-login">
+                <p>Ou conecte-se com:</p>
+                <div class="social-buttons">
+                    <button class="social-btn" onclick="socialLogin('discord')">
+                        <i class="fab fa-discord"></i>
+                        Discord
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        // Alternar entre abas
+        function switchTab(tab) {
+            // Remover classe active de todas as abas
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Adicionar classe active na aba selecionada
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // Alternar visibilidade da senha
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = event.target.querySelector('i') || event.target;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // Manipular login
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Desabilitar botão durante o processo
+            const submitBtn = event.target.querySelector('.login-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="loading"></i> Entrando...';
+
+            // Simular delay de rede
+            setTimeout(() => {
+                const result = auth.login(username, password);
+                
+                if (result.success) {
+                    showAlert('Login realizado com sucesso!', 'success');
+                    
+                    // Redirecionar após 1 segundo
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 1000);
+                } else {
+                    showAlert(result.message, 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+                }
+            }, 1000);
+        }
+
+        // Manipular registro
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            // Validações
+            if (password !== confirmPassword) {
+                showAlert('As senhas não coincidem!', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('A senha deve ter pelo menos 6 caracteres!', 'error');
+                return;
+            }
+
+            if (!agreeTerms) {
+                showAlert('Você deve aceitar os termos de uso!', 'error');
+                return;
+            }
+
+            // Desabilitar botão durante o processo
+            const submitBtn = event.target.querySelector('.login-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="loading"></i> Criando conta...';
+
+            // Simular delay de rede
+            setTimeout(() => {
+                const result = auth.register({
+                    username: username,
+                    email: email,
+                    password: password
+                });
+                
+                if (result.success) {
+                    showAlert('Conta criada com sucesso!', 'success');
+                    
+                    // Fazer login automático
+                    auth.login(username, password);
+                    
+                    // Redirecionar após 1 segundo
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 1000);
+                } else {
+                    showAlert(result.message, 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Criar Conta';
+                }
+            }, 1500);
+        }
+
+        // Login social com Google
+        function socialLogin(provider) {
+            if (provider === 'google') {
+                // Redirecionar para o endpoint de autenticação Google
+                window.location.href = 'http://localhost:3001/api/auth/google';
+            } else {
+                showAlert(`Login com ${provider} não implementado ainda!`, 'info');
+            }
+        }
+
+        // Verificar se já está logado
+        if (auth.isLoggedIn()) {
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>

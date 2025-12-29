@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizações - Hydra City RP</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .updates-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .updates-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .updates-header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .updates-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .updates-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: var(--border-radius);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .updates-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-updates {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .update-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .update-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .update-image {
+            width: 100%;
+            height: 250px;
+            background: var(--darker-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .update-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-update {
+            background: var(--gradient-primary);
+        }
+
+        .badge-event {
+            background: var(--gradient-secondary);
+        }
+
+        .badge-maintenance {
+            background: linear-gradient(135deg, #ffa500 0%, #ff6347 100%);
+        }
+
+        .badge-news {
+            background: linear-gradient(135deg, #32cd32 0%, #228b22 100%);
+        }
+
+        .update-content {
+            padding: 2rem;
+        }
+
+        .update-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .update-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .update-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .update-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .update-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .update-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .read-more-btn {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .read-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 1.5rem;
+        }
+
+        .sidebar-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recent-updates {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .recent-item {
+            padding: 1rem;
+            background: var(--darker-bg);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .recent-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .recent-title {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .recent-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .server-status {
+            text-align: center;
+        }
+
+        .status-indicator {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .status-text {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-details {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .changelog {
+            background: var(--darker-bg);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .changelog h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .changelog ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .changelog li {
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .changelog li::before {
+            content: '•';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .updates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .updates-header h1 {
+                font-size: 2rem;
+            }
+
+            .updates-header p {
+                font-size: 1rem;
+            }
+
+            .filter-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .update-content {
+                padding: 1.5rem;
+            }
+
+            .update-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i> Sobre
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="shop.html" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Loja
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="updates.html" class="nav-link active">
+                            <i class="fas fa-newspaper"></i> Atualizações
+                        </a>
+                    </li>
+                    <li class="nav-item" id="profileNav">
+                        <a href="profile.html" class="nav-link">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <a href="login.html" class="nav-link login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item" id="logoutNav" style="display: none;">
+                        <a href="#" class="nav-link logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="updates-container">
+        <div class="updates-header">
+            <h1><i class="fas fa-newspaper"></i> Atualizações</h1>
+            <p>Fique por dentro de todas as novidades, eventos e atualizações do Hydra City RP!</p>
+        </div>
+
+        <div class="updates-filters">
+            <button class="filter-btn active" onclick="filterUpdates('all')">
+                <i class="fas fa-border-all"></i> Todas
+            </button>
+            <button class="filter-btn" onclick="filterUpdates('update')">
+                <i class="fas fa-download"></i> Atualizações
+            </button>
+            <button class="filter-btn" onclick="filterUpdates('event')">
+                <i class="fas fa-calendar-alt"></i> Eventos
+            </button>
+            <button class="filter-btn" onclick="filterUpdates('news')">
+                <i class="fas fa-newspaper"></i> Notícias
+            </button>
+            <button class="filter-btn" onclick="filterUpdates('maintenance')">
+                <i class="fas fa-tools"></i> Manutenção
+            </button>
+        </div>
+
+        <div class="updates-grid">
+            <div class="main-updates" id="updatesContainer">
+                <!-- Updates will be loaded here -->
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-server"></i> Status do Servidor
+                    </h3>
+                    <div class="server-status">
+                        <div class="status-indicator">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="status-text">Online</div>
+                        <div class="status-details">
+                            <p>Jogadores: <span id="currentPlayers">247</span>/500</p>
+                            <p>Ping: <span id="serverPing">25ms</span></p>
+                            <p>Uptime: 99.9%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-clock"></i> Atualizações Recentes
+                    </h3>
+                    <div class="recent-updates" id="recentUpdates">
+                        <!-- Recent updates will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-list"></i> Changelog v2.5
+                    </h3>
+                    <div class="changelog">
+                        <h4>Novidades:</h4>
+                        <ul>
+                            <li>Sistema de facções reformulado</li>
+                            <li>Nova economia balanceada</li>
+                            <li>Mapas customizados adicionados</li>
+                            <li>Sistema de conquistas</li>
+                        </ul>
+                        <h4>Correções:</h4>
+                        <ul>
+                            <li>Bug de spawn corrigido</li>
+                            <li>Problemas de lag resolvidos</li>
+                            <li>Melhorias de performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Dados das atualizações
+        const updates = [
+            {
+                id: 1,
+                title: 'Hydra City 2.5 - A Maior Atualização do Ano!',
+                excerpt: 'Chegou a atualização mais esperada! Novos sistemas de facções, economia reformulada, novos veículos e muito mais. Prepare-se para uma experiência completamente nova no Hydra City.',
+                content: 'Esta é a maior atualização já lançada para o Hydra City RP...',
+                category: 'update',
+                date: '2024-01-15',
+                author: 'Equipe Hydra City',
+                tags: ['Atualização', 'Facções', 'Economia', 'Veículos'],
+                featured: true
+            },
+            {
+                id: 2,
+                title: 'Evento de Ano Novo - Prêmios Incríveis Esperando!',
+                excerpt: 'Celebre o Ano Novo conosco! Participe do nosso evento especial e ganhe prêmios exclusivos, incluindo carros raros, dinheiro e itens únicos.',
+                content: 'O evento de Ano Novo está chegando...',
+                category: 'event',
+                date: '2024-01-12',
+                author: 'Maria Oliveira',
+                tags: ['Evento', 'Prêmios', 'Ano Novo', 'Especial']
+            },
+            {
+                id: 3,
+                title: 'Nova Loja Online Disponível',
+                excerpt: 'Nossa nova loja online está no ar! Confira os novos itens disponíveis, incluindo VIP, veículos exclusivos e muito mais.',
+                content: 'A nova loja online do Hydra City...',
+                category: 'news',
+                date: '2024-01-10',
+                author: 'Carlos Santos',
+                tags: ['Loja', 'VIP', 'Itens', 'Online']
+            },
+            {
+                id: 4,
+                title: 'Manutenção Programada - 16/01/2024',
+                excerpt: 'Manutenção programada para implementação de melhorias de performance e correções de bugs. Duração estimada: 2 horas.',
+                content: 'Informamos que haverá uma manutenção...',
+                category: 'maintenance',
+                date: '2024-01-08',
+                author: 'Equipe Técnica',
+                tags: ['Manutenção', 'Performance', 'Correções']
+            },
+            {
+                id: 5,
+                title: 'Sistema Anti-Cheat Atualizado',
+                excerpt: 'Nosso sistema anti-cheat recebeu uma grande atualização para garantir um ambiente ainda mais justo para todos os jogadores.',
+                content: 'O sistema anti-cheat do Hydra City...',
+                category: 'update',
+                date: '2024-01-05',
+                author: 'João Costa',
+                tags: ['Anti-Cheat', 'Segurança', 'Atualização']
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        // Carregar atualizações
+        function loadUpdates(filter = 'all') {
+            const container = document.getElementById('updatesContainer');
+            container.innerHTML = '';
+
+            const filteredUpdates = filter === 'all' 
+                ? updates 
+                : updates.filter(update => update.category === filter);
+
+            filteredUpdates.forEach(update => {
+                const updateElement = document.createElement('div');
+                updateElement.className = 'update-card';
+                updateElement.innerHTML = `
+                    <div class="update-image">
+                        <i class="fas fa-${getCategoryIcon(update.category)}"></i>
+                        <div class="update-badge badge-${update.category}">
+                            ${getCategoryName(update.category)}
+                        </div>
+                    </div>
+                    <div class="update-content">
+                        <div class="update-meta">
+                            <div class="update-date">
+                                <i class="fas fa-calendar"></i>
+                                ${formatDate(update.date)}
+                            </div>
+                            <div class="update-author">
+                                <i class="fas fa-user"></i>
+                                ${update.author}
+                            </div>
+                        </div>
+                        <h2 class="update-title">${update.title}</h2>
+                        <p class="update-excerpt">${update.excerpt}</p>
+                        <div class="update-tags">
+                            ${update.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <button class="read-more-btn" onclick="readMore(${update.id})">
+                            <i class="fas fa-book-open"></i>
+                            Ler Mais
+                        </button>
+                    </div>
+                `;
+                container.appendChild(updateElement);
+            });
+        }
+
+        // Carregar atualizações recentes na sidebar
+        function loadRecentUpdates() {
+            const container = document.getElementById('recentUpdates');
+            const recentUpdates = updates.slice(0, 5);
+
+            recentUpdates.forEach(update => {
+                const recentElement = document.createElement('div');
+                recentElement.className = 'recent-item';
+                recentElement.innerHTML = `
+                    <div class="recent-title">${update.title}</div>
+                    <div class="recent-date">${formatDate(update.date)}</div>
+                `;
+                recentElement.onclick = () => readMore(update.id);
+                container.appendChild(recentElement);
+            });
+        }
+
+        // Filtrar atualizações
+        function filterUpdates(category) {
+            currentFilter = category;
+            
+            // Atualizar botões de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Carregar atualizações filtradas
+            loadUpdates(category);
+        }
+
+        // Ler mais sobre uma atualização
+        function readMore(updateId) {
+            const update = updates.find(u => u.id === updateId);
+            if (update) {
+                // Aqui você poderia abrir um modal ou redirecionar para uma página detalhada
+                alert(`Lendo: ${update.title}\n\n${update.content || 'Conteúdo completo em breve...'}`);
+            }
+        }
+
+        // Obter ícone da categoria
+        function getCategoryIcon(category) {
+            const icons = {
+                'update': 'download',
+                'event': 'calendar-alt',
+                'news': 'newspaper',
+                'maintenance': 'tools'
+            };
+            return icons[category] || 'info';
+        }
+
+        // Obter nome da categoria
+        function getCategoryName(category) {
+            const names = {
+                'update': 'Atualização',
+                'event': 'Evento',
+                'news': 'Notícia',
+                'maintenance': 'Manutenção'
+            };
+            return names[category] || 'Info';
+        }
+
+        // Atualizar status do servidor
+        function updateServerStatus() {
+            const playersElement = document.getElementById('currentPlayers');
+            const pingElement = document.getElementById('serverPing');
+            
+            if (playersElement && pingElement) {
+                const players = 200 + Math.floor(Math.random() * 100);
+                const ping = 20 + Math.floor(Math.random() * 30);
+                
+                playersElement.textContent = players;
+                pingElement.textContent = ping + 'ms';
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUpdates();
+            loadRecentUpdates();
+            updateServerStatus();
+            
+            // Atualizar status do servidor a cada 30 segundos
+            setInterval(updateServerStatus, 30000);
+            
+            // Atualizar UI de autenticação
+            if (window.auth) {
+                window.auth.updateUI();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - Hydra City RP</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .profile-avatar:hover {
+            opacity: 0.8;
+        }
+
+        .avatar-edit-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .profile-avatar-container:hover .avatar-edit-overlay {
+            opacity: 1;
+        }
+
+        .profile-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .profile-tag {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .edit-profile-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .logout-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .edit-profile-btn:hover, .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .purchases-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .purchase-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .purchase-item {
+            background: var(--darker-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .empty-purchases {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+        }
+
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--darker-bg);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .avatar-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .avatar-option:hover, .avatar-option.selected {
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 80px auto 30px;
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i> Sobre
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="shop.html" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Loja
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="updates.html" class="nav-link">
+                            <i class="fas fa-newspaper"></i> Atualizações
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="profile.html" class="nav-link active">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <a href="../index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar-container" onclick="openAvatarModal()">
+                <img src="" alt="Avatar" class="profile-avatar" id="userAvatar">
+                <div class="avatar-edit-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Carregando...</h1>
+                <span class="profile-tag" id="userRole">Carregando...</span>
+            </div>
+            <button class="edit-profile-btn" onclick="openEditModal()">
+                <i class="fas fa-edit"></i> Editar Dados
+            </button>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+
+        <div class="purchases-section">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i> Minhas Compras
+            </h2>
+            <div class="purchase-list" id="purchaseList">
+                <!-- Purchases will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Perfil</h2>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editUsername">Nome de Usuário</label>
+                    <input type="text" id="editUsername" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPassword">Nova Senha (deixe vazio para manter atual)</label>
+                    <input type="password" id="editPassword" class="form-input" placeholder="Nova senha">
+                </div>
+                <button type="submit" class="edit-profile-btn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Avatar Modal -->
+    <div id="avatarModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Escolher Avatar</h2>
+                <span class="close" onclick="closeAvatarModal()">&times;</span>
+            </div>
+            <div class="avatar-options" id="avatarOptions">
+                <!-- Avatar options will be loaded here -->
+            </div>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label for="customAvatar">Ou insira URL da imagem:</label>
+                <input type="url" id="customAvatar" class="form-input" placeholder="https://exemplo.com/imagem.jpg">
+            </div>
+            <button onclick="saveAvatar()" class="edit-profile-btn" style="width: 100%; margin-top: 1rem;">
+                <i class="fas fa-check"></i> Confirmar
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        // Verificar autenticação
+        if (!checkAuth()) {
+            window.location.href = 'login.html';
+        }
+
+        // Carregar dados do usuário
+        const user = auth.getCurrentUser();
+        if (user) {
+            document.getElementById('userAvatar').src = user.avatar;
+            document.getElementById('userName').textContent = user.username;
+            document.getElementById('userRole').textContent = user.role === 'admin' ? 'Administrador' : 'Jogador';
+            document.getElementById('editUsername').value = user.username;
+            document.getElementById('editEmail').value = user.email || '';
+            
+            loadPurchases();
+            loadAvatarOptions();
+        }
+
+        // Carregar compras do usuário
+        function loadPurchases() {
+            const purchaseList = document.getElementById('purchaseList');
+            const user = auth.getCurrentUser();
+            
+            if (!user || !user.inventory || user.inventory.length === 0) {
+                purchaseList.innerHTML = '<div class="empty-purchases">Nenhuma compra realizada ainda.</div>';
+                return;
+            }
+
+            // Filtrar itens válidos (não expirados)
+            const validPurchases = user.inventory.filter(item => {
+                const expiration = new Date(item.expirationDate);
+                return expiration > new Date();
+            });
+
+            if (validPurchases.length === 0) {
+                purchaseList.innerHTML = '<div class="empty-purchases">Nenhuma compra ativa no momento.</div>';
+                return;
+            }
+
+            // Ordenar por data de compra (mais recente primeiro)
+            validPurchases.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+
+            validPurchases.forEach(item => {
+                const purchaseDate = new Date(item.purchaseDate);
+                const expirationDate = new Date(item.expirationDate);
+
+                const itemElement = document.createElement('div');
+                itemElement.className = 'purchase-item';
+                itemElement.innerHTML = `
+                    <div class="purchase-header">
+                        <span class="purchase-name">${item.name}</span>
+                        <span class="purchase-price">${formatMoney(item.price)}</span>
+                    </div>
+                    <div class="purchase-details">
+                        Comprado em: ${purchaseDate.toLocaleDateString('pt-BR')}<br>
+                        Expira em: ${expirationDate.toLocaleDateString('pt-BR')}
+                    </div>
+                `;
+                purchaseList.appendChild(itemElement);
+            });
+        }
+
+        // Função para formatar dinheiro
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(amount);
+        }
+
+        // Modal functions
+        function openEditModal() {
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function openAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'block';
+        }
+
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'none';
+        }
+
+        // Load avatar options
+        function loadAvatarOptions() {
+            const avatarOptions = document.getElementById('avatarOptions');
+            const avatars = [
+                'https://via.placeholder.com/150/00d4ff/ffffff?text=U1',
+                'https://via.placeholder.com/150/7c3aed/ffffff?text=U2',
+                'https://via.placeholder.com/150/10b981/ffffff?text=U3',
+                'https://via.placeholder.com/150/f59e0b/ffffff?text=U4',
+                'https://via.placeholder.com/150/ef4444/ffffff?text=U5',
+                'https://via.placeholder.com/150/8b5cf6/ffffff?text=U6',
+                'https://via.placeholder.com/150/06b6d4/ffffff?text=U7',
+                'https://via.placeholder.com/150/84cc16/ffffff?text=U8'
+            ];
+
+            avatarOptions.innerHTML = '';
+            avatars.forEach(avatar => {
+                const img = document.createElement('img');
+                img.src = avatar;
+                img.className = 'avatar-option';
+                img.onclick = () => selectAvatar(avatar);
+                avatarOptions.appendChild(img);
+            });
+        }
+
+        let selectedAvatar = null;
+
+        function selectAvatar(avatar) {
+            selectedAvatar = avatar;
+            document.querySelectorAll('.avatar-option').forEach(img => {
+                img.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function saveAvatar() {
+            const customUrl = document.getElementById('customAvatar').value;
+            const newAvatar = selectedAvatar || customUrl || document.getElementById('userAvatar').src;
+            
+            if (newAvatar) {
+                const user = auth.getCurrentUser();
+                user.avatar = newAvatar;
+                auth.updateUser(user);
+                document.getElementById('userAvatar').src = newAvatar;
+                closeAvatarModal();
+                showAlert('Avatar atualizado com sucesso!', 'success');
+            }
+        }
+
+        // Handle edit form
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const user = auth.getCurrentUser();
+            const newUsername = document.getElementById('editUsername').value;
+            const newEmail = document.getElementById('editEmail').value;
+            const newPassword = document.getElementById('editPassword').value;
+            
+            // Check if username already exists (except current user)
+            const existingUser = auth.users.find(u => u.username === newUsername && u.id !== user.id);
+            if (existingUser) {
+                showAlert('Nome de usuário já existe!', 'error');
+                return;
+            }
+            
+            // Update user data
+            user.username = newUsername;
+            user.email = newEmail;
+            if (newPassword) {
+                user.password = newPassword;
+            }
+            
+            auth.updateUser(user);
+            document.getElementById('userName').textContent = newUsername;
+            closeEditModal();
+            showAlert('Dados atualizados com sucesso!', 'success');
+        });
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Show alert function
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 2rem;
+                border-radius: var(--border-radius);
+                color: white;
+                z-index: 1001;
+                background: ${type === 'success' ? 'var(--success-color)' : 'var(--danger-color)'};
+            `;
+            alertDiv.textContent = message;
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

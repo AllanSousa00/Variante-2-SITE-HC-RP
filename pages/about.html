@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Hydra City RP</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .about-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .about-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .about-hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero p {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .about-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .story-content {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .story-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary-color);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .member-name {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .member-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-date {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .rules-section {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .rules-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                padding-left: 40px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-date {
+                position: static;
+                transform: none;
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link active">
+                            <i class="fas fa-info-circle"></i> Sobre
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="shop.html" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Loja
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="updates.html" class="nav-link">
+                            <i class="fas fa-newspaper"></i> Atualizações
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="support.html" class="nav-link">
+                            <i class="fas fa-headset"></i> Suporte
+                        </a>
+                    </li>
+                    <li class="nav-item" id="profileNav">
+                        <a href="profile.html" class="nav-link">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <a href="login.html" class="nav-link login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item" id="logoutNav" style="display: none;">
+                        <a href="#" class="nav-link logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="about-container">
+        <!-- Hero Section -->
+        <div class="about-hero">
+            <h1><i class="fas fa-city"></i> Sobre Hydra City</h1>
+            <p>Descubra a história por trás do melhor servidor de GTA RP SAMP do Brasil. Uma comunidade dedicada a proporcionar a melhor experiência de roleplay possível.</p>
+        </div>
+
+        <!-- Nossa História -->
+        <section class="about-section">
+            <h2 class="section-title">Nossa História</h2>
+            <div class="story-content">
+                <p>
+                    Hydra City nasceu em 2024 com uma visão clara: criar o servidor de roleplay mais imersivo e realista do Brasil. Nossa equipe de desenvolvedores experientes trabalhou incansavelmente para construir um ambiente único, onde cada jogador pode viver uma segunda vida virtual completa.
+                </p>
+                <p>
+                    Desde o início, nosso foco sempre foi na qualidade da experiência do jogador. Investimos em tecnologia de ponta, sistemas inovadores e uma comunidade acolhedora que recebe tanto veteranos quanto novatos no mundo do roleplay.
+                </p>
+                <p>
+                    Hoje, somos orgulhosos de ter uma das comunidades mais ativas e engajadas do cenário nacional, com milhares de jogadores que fazem parte da família Hydra City.
+                </p>
+            </div>
+        </section>
+
+        <!-- Características Únicas -->
+        <section class="about-section">
+            <h2 class="section-title">O que nos torna únicos</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Scripts Exclusivos</h3>
+                    <p>Desenvolvemos nossos próprios sistemas do zero, garantindo uma experiência única que você não encontrará em nenhum outro lugar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Economia Balanceada</h3>
+                    <p>Sistema econômico cuidadosamente equilibrado que oferece múltiplas formas de progressão e crescimento no jogo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Comunidade Ativa</h3>
+                    <p>Uma comunidade vibrante e acolhedora, sempre disposta a ajudar novos jogadores e criar histórias incríveis juntos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Anti-Cheat Avançado</h3>
+                    <p>Sistema de proteção de última geração que garante um ambiente justo e livre de trapaças para todos os jogadores.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Suporte Dedicado</h3>
+                    <p>Equipe de suporte disponível 24/7 para resolver qualquer problema e garantir a melhor experiência possível.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Atualizações Constantes</h3>
+                    <p>Novos conteúdos, sistemas e melhorias são adicionados regularmente para manter a experiência sempre fresca.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="about-section">
+            <h2 class="section-title">Nossa Jornada</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Fundação</h3>
+                        <p>Hydra City é fundada com o objetivo de criar o melhor servidor de RP do Brasil.</p>
+                    </div>
+                    <div class="timeline-date">Jan 2024</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Primeira Beta</h3>
+                        <p>Lançamento da versão beta para testes com a comunidade e ajustes iniciais.</p>
+                    </div>
+                    <div class="timeline-date">Fev 2024</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Lançamento Oficial</h3>
+                        <p>Abertura oficial do servidor para o público com todos os sistemas funcionais.</p>
+                    </div>
+                    <div class="timeline-date">Mar 2024</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Primeira Grande Atualização</h3>
+                        <p>Implementação de novos sistemas de facções e economia aprimorada.</p>
+                    </div>
+                    <div class="timeline-date">Jun 2024</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>10.000 Jogadores</h3>
+                        <p>Alcançamos a marca de 10 mil jogadores registrados em nossa comunidade.</p>
+                    </div>
+                    <div class="timeline-date">Set 2024</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Hydra City 2.5</h3>
+                        <p>Lançamento da maior atualização até hoje com novos mapas e sistemas.</p>
+                    </div>
+                    <div class="timeline-date">Jan 2025</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipe -->
+        <section class="about-section">
+            <h2 class="section-title">Nossa Equipe</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="member-name">Allan Cruz</div>
+                    <div class="member-role">Fundador & CEO</div>
+                    <div class="member-description">Visionário por trás do Hydra City, com mais de 10 anos de experiência em desenvolvimento de servidores.</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="member-name">Carlos Santos</div>
+                    <div class="member-role">Desenvolvedor Principal</div>
+                    <div class="member-description">Responsável pelo desenvolvimento dos sistemas únicos que fazem do Hydra City especial.</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="member-name">Maria Oliveira</div>
+                    <div class="member-role">Gerente de Comunidade</div>
+                    <div class="member-description">Cuida da nossa comunidade e garante que todos se sintam bem-vindos no servidor.</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="member-name">João Costa</div>
+                    <div class="member-role">Coordenador de Suporte</div>
+                    <div class="member-description">Lidera nossa equipe de suporte para garantir que todos os problemas sejam resolvidos rapidamente.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regras Principais -->
+        <section class="about-section">
+            <h2 class="section-title">Regras Principais</h2>
+            <div class="rules-section">
+                <ul class="rules-list">
+                    <li>Respeite todos os jogadores e membros da equipe</li>
+                    <li>Mantenha o roleplay realista e imersivo</li>
+                    <li>Não use cheats, hacks ou exploits</li>
+                    <li>Evite metagaming e powergaming</li>
+                    <li>Siga as regras de cada facção ou organização</li>
+                    <li>Não faça spam no chat ou use linguagem ofensiva</li>
+                    <li>Respeite as decisões da administração</li>
+                    <li>Denuncie comportamentos inadequados</li>
+                    <li>Mantenha-se atualizado com as regras do servidor</li>
+                    <li>Divirta-se e ajude a criar um ambiente positivo</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Atualizar UI de autenticação
+            if (window.auth) {
+                window.auth.updateUI();
+            }
+        });
+    </script>
+</body>
+</html>

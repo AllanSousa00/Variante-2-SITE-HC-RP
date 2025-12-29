@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja - Hydra City RP</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .shop-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .shop-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .shop-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .shop-description {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .shop-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .shop-item {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .shop-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .item-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            min-height: 3em;
+        }
+
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .item-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .item-duration {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .buy-btn, .add-to-cart-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .add-to-cart-btn {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .buy-btn {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .buy-btn:hover, .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .cart-icon {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-primary);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .cart-content {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 123, 255, 0.2);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--darker-bg);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .cart-item-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .remove-item {
+            background: var(--gradient-secondary);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-total {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .total-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .passaporte-section {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--darker-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .passaporte-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--darker-bg);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .passaporte-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .shop-title {
+                font-size: 2rem;
+            }
+
+            .shop-description {
+                font-size: 1rem;
+            }
+
+            .category-btn {
+                width: calc(50% - 0.5rem);
+            }
+
+            .cart-content {
+                width: 95%;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Início</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> Sobre</a></li>
+                    <li class="nav-item"><a href="shop.html" class="nav-link active"><i class="fas fa-shopping-cart"></i> Loja</a></li>
+                    <li class="nav-item"><a href="updates.html" class="nav-link"><i class="fas fa-newspaper"></i> Atualizações</a></li>
+                    <li class="nav-item"><a href="support.html" class="nav-link"><i class="fas fa-headset"></i> Suporte</a></li>
+                    <li class="nav-item" id="profileNav"><a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Perfil</a></li>
+                    <li class="nav-item" id="loginNav"><a href="login.html" class="nav-link login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li class="nav-item" id="logoutNav"><a href="#" class="nav-link logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="shop-container">
+        <div class="shop-header">
+            <h1 class="shop-title">Loja Hydra City</h1>
+            <p class="shop-description">
+                Adquira itens exclusivos, VIP e muito mais para melhorar sua experiência no servidor!
+                Todos os itens têm duração de 30 dias.
+            </p>
+        </div>
+
+        <div class="shop-categories">
+            <button class="category-btn active" data-category="all">Todos</button>
+            <button class="category-btn" data-category="vip">VIP</button>
+            <button class="category-btn" data-category="vehicles">Veículos</button>
+            <button class="category-btn" data-category="properties">Propriedades</button>
+            <button class="category-btn" data-category="weapons">Armas</button>
+            <button class="category-btn" data-category="clothes">Roupas</button>
+        </div>
+
+        <div class="shop-grid" id="shopItems">
+            <!-- Items will be loaded dynamically -->
+        </div>
+    </div>
+
+    <div class="cart-icon" onclick="openCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2 class="cart-title">Carrinho de Compras</h2>
+                <button class="close-cart" onclick="closeCart()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <div class="total-amount">Total: <span id="totalAmount">R$ 0,00</span></div>
+                <div class="passaporte-section">
+                    <label for="passaporteInput">Passaporte do Personagem (Obrigatório):</label>
+                    <input type="text" id="passaporteInput" class="passaporte-input" placeholder="Ex: 123456789" maxlength="9" required>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">Finalizar Compra PIX</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/shop-items.js"></script>
+        <script>
+            let cart = [];
+            let shopItems = [];
+
+            // Load shop items from backend
+            async function loadShopItems(category = 'all') {
+                try {
+                    const response = await fetch('/api/shop/items');
+                    if (!response.ok) throw new Error('Erro ao carregar itens');
+                    
+                    shopItems = await response.json();
+                    displayItems(category);
+                } catch (error) {
+                    console.error('Erro:', error);
+                    // Fallback to local items if backend fails
+                    shopItems = shopItemsData || [];
+                    displayItems(category);
+                    showAlert('Usando itens locais - backend não disponível', 'info');
+                }
+            }
+
+            function displayItems(category = 'all') {
+                const container = document.getElementById('shopItems');
+                container.innerHTML = '';
+
+                const items = category === 'all' 
+                    ? shopItems 
+                    : shopItems.filter(item => item.category === category);
+
+                if (items.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Nenhum item encontrado</p>';
+                    return;
+                }
+
+                items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'shop-item';
+                    itemElement.innerHTML = `
+                        <div class="item-image">
+                            <i class="fas fa-${item.icon}"></i>
+                        </div>
+                        <div class="item-content">
+                            <h3 class="item-title">${item.name}</h3>
+                            <p class="item-description">${item.description}</p>
+                            <div class="item-details">
+                                <span class="item-price">R$ ${item.price.toFixed(2)}</span>
+                                <span class="item-duration">${item.duration || '30 dias'}</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addToCart(${item.id})">
+                                <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                            </button>
+                            <button class="buy-btn" onclick="buyNow(${item.id})">
+                                <i class="fas fa-shopping-cart"></i> Comprar Agora
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(itemElement);
+                });
+            }
+
+            // Category filtering
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    displayItems(e.target.dataset.category);
+                });
+            });
+
+            // Cart functions
+            function addToCart(itemId) {
+                if (!auth || !auth.isLoggedIn || !auth.isLoggedIn()) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const item = shopItems.find(i => i.id === itemId);
+                if (!item) return;
+
+                if (cart.find(cartItem => cartItem.id === itemId)) {
+                    showAlert('Item já está no carrinho!', 'info');
+                    return;
+                }
+
+                cart.push(item);
+                updateCartUI();
+                showAlert('Item adicionado ao carrinho!', 'success');
+            }
+
+            function buyNow(itemId) {
+                if (!auth || !auth.isLoggedIn || !auth.isLoggedIn()) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const item = shopItems.find(i => i.id === itemId);
+                if (!item) return;
+
+                cart = [item];
+                updateCartUI();
+                openCart();
+            }
+
+            function updateCartUI() {
+                const cartCount = document.getElementById('cartCount');
+                const cartItems = document.getElementById('cartItems');
+                const totalAmount = document.getElementById('totalAmount');
+
+                cartCount.textContent = cart.length;
+
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">Carrinho vazio</p>';
+                    totalAmount.textContent = 'R$ 0,00';
+                    return;
+                }
+
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                totalAmount.textContent = `R$ ${total.toFixed(2)}`;
+
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-icon">
+                            <i class="fas fa-${item.icon}"></i>
+                        </div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">R$ ${item.price.toFixed(2)}</div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            function removeFromCart(itemId) {
+                cart = cart.filter(item => item.id !== itemId);
+                updateCartUI();
+            }
+
+            function openCart() {
+                if (!auth || !auth.isLoggedIn || !auth.isLoggedIn()) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                updateCartUI();
+                document.getElementById('cartModal').style.display = 'flex';
+            }
+
+            function closeCart() {
+                document.getElementById('cartModal').style.display = 'none';
+            }
+
+            async function checkout() {
+                if (cart.length === 0) {
+                    showAlert('Carrinho está vazio!', 'error');
+                    return;
+                }
+
+                const passaporte = document.getElementById('passaporteInput').value.trim();
+                if (!passaporte) {
+                    showAlert('Por favor, digite o número do passaporte do seu personagem!', 'error');
+                    return;
+                }
+
+                if (!/^\d{6,9}$/.test(passaporte)) {
+                    showAlert('Passaporte deve conter entre 6 e 9 dígitos!', 'error');
+                    return;
+                }
+
+                const user = auth && auth.getCurrentUser ? auth.getCurrentUser() : null;
+                if (!user) {
+                    showAlert('Usuário não autenticado!', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/mercadopago/create-preference', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            items: cart,
+                            userId: user.id || 'anonymous',
+                            userEmail: user.email || 'user@example.com',
+                            userName: user.username || 'Usuário',
+                            passaporte: passaporte
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        showAlert('Redirecionando para pagamento...', 'success');
+                        window.location.href = data.initPoint || data.sandboxInitPoint;
+                    } else {
+                        showAlert(data.error || 'Erro ao criar pedido', 'error');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showAlert('Erro ao processar checkout', 'error');
+                }
+            }
+
+            function showAlert(message, type) {
+                const alertDiv = document.createElement('div');
+                alertDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 1rem 2rem;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 600;
+                    z-index: 10000;
+                    ${type === 'success' ? 'background: #28a745;' : type === 'error' ? 'background: #dc3545;' : 'background: #ffc107;'}
+                `;
+                alertDiv.textContent = message;
+                document.body.appendChild(alertDiv);
+                
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', () => {
+                // Fallback data if backend fails
+                window.shopItemsData = [
+                    {
+                        id: 1,
+                        name: 'VIP Bronze',
+                        description: 'Acesso VIP básico com benefícios exclusivos',
+                        price: 29.90,
+                        category: 'vip',
+                        icon: 'crown'
+                    },
+                    {
+                        id: 2,
+                        name: 'VIP Prata',
+                        description: 'VIP intermediário com mais benefícios e vantagens',
+                        price: 49.90,
+                        category: 'vip',
+                        icon: 'crown'
+                    },
+                    {
+                        id: 3,
+                        name: 'VIP Ouro',
+                        description: 'VIP premium com todos os benefícios disponíveis',
+                        price: 79.90,
+                        category: 'vip',
+                        icon: 'crown'
+                    },
+                    {
+                        id: 4,
+                        name: 'Casa Moderna',
+                        description: 'Casa moderna com garagem e piscina',
+                        price: 99.90,
+                        category: 'properties',
+                        icon: 'home'
+                    },
+                    {
+                        id: 5,
+                        name: 'Apartamento Luxo',
+                        description: 'Apartamento de luxo no centro da cidade',
+                        price: 149.90,
+                        category: 'properties',
+                        icon: 'building'
+                    },
+                    {
+                        id: 6,
+                        name: 'Mansão',
+                        description: 'Mansão gigante com todas as comodidades',
+                        price: 299.90,
+                        category: 'properties',
+                        icon: 'home'
+                    },
+                    {
+                        id: 7,
+                        name: 'Carro Esportivo',
+                        description: 'Carro esportivo de alta performance',
+                        price: 199.90,
+                        category: 'vehicles',
+                        icon: 'car'
+                    },
+                    {
+                        id: 8,
+                        name: 'Moto Custom',
+                        description: 'Moto customizada com estilo único',
+                        price: 89.90,
+                        category: 'vehicles',
+                        icon: 'motorcycle'
+                    },
+                    {
+                        id: 9,
+                        name: 'Kit Armas Premium',
+                        description: 'Conjunto de armas premium para sua proteção',
+                        price: 159.90,
+                        category: 'weapons',
+                        icon: 'gun'
+                    },
+                    {
+                        id: 10,
+                        name: 'Roupa VIP',
+                        description: 'Conjunto de roupas exclusivas para VIPs',
+                        price: 39.90,
+                        category: 'clothes',
+                        icon: 'tshirt'
+                    }
+                ];
+
+                loadShopItems();
+                
+                // Close cart when clicking outside
+                document.getElementById('cartModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'cartModal') {
+                        closeCart();
+                    }
+                });
+
+                // Handle payment return
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('success') === 'true') {
+                    showAlert('Pagamento realizado com sucesso!', 'success');
+                    cart = [];
+                    updateCartUI();
+                } else if (urlParams.get('failure') === 'true') {
+                    showAlert('Pagamento não aprovado. Tente novamente.', 'error');
+                } else if (urlParams.get('pending') === 'true') {
+                    showAlert('Pagamento pendente. Aguarde a confirmação.', 'info');
+                }
+            });
+        </script>
+</body>
+</html>
