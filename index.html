@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydra City - O Melhor Servidor de GTA RP SAMP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1><i class="fas fa-city"></i> HYDRA CITY</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <i class="fas fa-home"></i> Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/about.html" class="nav-link">
+                            <i class="fas fa-info-circle"></i> Sobre
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/shop.html" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Loja
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/updates.html" class="nav-link">
+                            <i class="fas fa-newspaper"></i> Atualizações
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pages/support.html" class="nav-link">
+                            <i class="fas fa-headset"></i> Suporte
+                        </a>
+                    </li>
+                    <li class="nav-item" id="profileNav" style="display: none;">
+                        <a href="pages/profile.html" class="nav-link">
+                            <i class="fas fa-user"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <a href="pages/login.html" class="nav-link login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item" id="logoutNav" style="display: none;">
+                        <a href="#" class="nav-link logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text animate-fadeInLeft">
+                <h1 class="hero-title">
+                    <span class="gradient-text typewriter">HYDRA CITY</span>
+                    <span class="subtitle glow">O Futuro do RP</span>
+                </h1>
+                <p class="hero-description">
+                    <span class="highlight">Experimente o roleplay mais imersivo do Brasil.</span> 
+                    Com sistemas únicos, economia realista e uma comunidade incrível esperando por você.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="connectToServer()">
+                        <i class="fas fa-play"></i> Conectar Agora
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='pages/about.html'">
+                        <i class="fas fa-info"></i> Saiba Mais
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image animate-fadeInRight">
+                <div class="server-info-card enhanced-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-server pulse-icon"></i> Informações do Servidor</h3>
+                        <div class="status-indicator">
+                            <div class="status-dot online"></div>
+                            <span class="status-text">Online</span>
+                        </div>
+                    </div>
+                    
+                    <div class="server-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">IP do Servidor</span>
+                                <span class="detail-value" id="serverIP">hydra.city:7777</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-code-branch"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Versão</span>
+                                <span class="detail-value">SA-MP 0.3.7</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Modo de Jogo</span>
+                                <span class="detail-value">Hydra City RP v2.5</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Jogadores Online</span>
+                                <span class="detail-value live-count" id="livePlayerCount">247</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="server-actions">
+                        <button class="btn btn-primary server-connect-btn" onclick="connectToServer()">
+                            <i class="fas fa-play"></i> Conectar Agora
+                        </button>
+                        <button class="btn btn-secondary server-copy-btn" onclick="copyServerIP()">
+                            <i class="fas fa-copy"></i> Copiar IP
+                        </button>
+                    </div>
+                    
+                    <div class="server-stats">
+                        <div class="stat-mini">
+                            <i class="fas fa-signal"></i>
+                            <span>Ping: <span class="ping-value">25ms</span></span>
+                        </div>
+                        <div class="stat-mini">
+                            <i class="fas fa-clock"></i>
+                            <span>Uptime: 99.9%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="particles"></div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news">
+        <div class="container">
+            <h2 class="section-title">Últimas Notícias</h2>
+            <p class="news-subtitle">Fique por dentro de todas as novidades e atualizações do servidor</p>
+            <div class="news-grid">
+                <article class="news-card featured">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/400x250/1a1a2e/ffffff?text=Update+2.5" alt="Update 2.5">
+                        <div class="news-badge featured-badge">🔥 Destaque</div>
+                        <div class="news-overlay"></div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date"><i class="fas fa-calendar"></i> 15 de Janeiro, 2024</span>
+                            <span class="news-category update"><i class="fas fa-rocket"></i> Atualização</span>
+                        </div>
+                        <h3>Hydra City 2.5 - A Maior Atualização do Ano!</h3>
+                        <p>Novos sistemas de facções revolucionários, economia completamente reformulada, frota de veículos exclusivos e mecânicas de roleplay inovadoras. Prepare-se para uma experiência completamente nova que vai redefinir o padrão de qualidade no cenário nacional!</p>
+                        <div class="news-highlights">
+                            <span class="highlight-tag">✨ Novo Sistema de Facções</span>
+                            <span class="highlight-tag">💰 Economia Reformulada</span>
+                            <span class="highlight-tag">🚗 Veículos Exclusivos</span>
+                        </div>
+                        <a href="pages/updates.html" class="read-more enhanced">
+                            <span>Ler Mais</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/300x200/16213e/ffffff?text=Evento+Especial" alt="Evento">
+                        <div class="news-badge event-badge">🎉 Evento</div>
+                        <div class="news-overlay"></div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date"><i class="fas fa-calendar"></i> 12 de Janeiro, 2024</span>
+                            <span class="news-category event"><i class="fas fa-star"></i> Evento</span>
+                        </div>
+                        <h3>Evento de Ano Novo - Prêmios Incríveis!</h3>
+                        <p>Participe do nosso mega evento especial com prêmios exclusivos, competições épicas e surpresas que vão marcar o início de 2024!</p>
+                        <a href="pages/updates.html" class="read-more enhanced">
+                            <span>Ler Mais</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/300x200/0f3460/ffffff?text=Nova+Loja" alt="Loja">
+                        <div class="news-badge shop-badge">🛒 Loja</div>
+                        <div class="news-overlay"></div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date"><i class="fas fa-calendar"></i> 10 de Janeiro, 2024</span>
+                            <span class="news-category shop"><i class="fas fa-shopping-bag"></i> Loja</span>
+                        </div>
+                        <h3>Nova Loja Online Disponível</h3>
+                        <p>Confira os novos itens exclusivos, pacotes VIP renovados e ofertas especiais em nossa loja virtual completamente reformulada!</p>
+                        <a href="pages/shop.html" class="read-more enhanced">
+                            <span>Ler Mais</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-city"></i> Hydra City</h3>
+                    <p>O melhor servidor de GTA RP SAMP do Brasil. Junte-se à nossa comunidade e viva experiências únicas!</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="pages/about.html">Sobre</a></li>
+                        <li><a href="pages/shop.html">Loja</a></li>
+                        <li><a href="pages/updates.html">Atualizações</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="pages/support.html">Central de Ajuda</a></li>
+                        <li><a href="pages/support.html">Reportar Bug</a></li>
+                        <li><a href="pages/support.html">Contato</a></li>
+                        <li><a href="#">Regras</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Servidor</h4>
+                    <p><strong>IP:</strong> hydra.city:7777</p>
+                    <p><strong>Versão:</strong> SA-MP 0.3.7</p>
+                    <p><strong>Players Online:</strong> <span id="footerPlayersCount">247</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hydra City. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
